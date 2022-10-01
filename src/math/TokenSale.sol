@@ -14,15 +14,19 @@ contract TokenSaleChallenge {
     }
 
     function buy(uint256 numTokens) public payable {
-        require(msg.value == numTokens * PRICE_PER_TOKEN);
-
-        balanceOf[msg.sender] += numTokens;
+        unchecked {
+            require(msg.value == numTokens * PRICE_PER_TOKEN);
+            balanceOf[msg.sender] += numTokens;
+        }
+        
     }
 
     function sell(uint256 numTokens) public {
-        require(balanceOf[msg.sender] >= numTokens);
-
-        balanceOf[msg.sender] -= numTokens;
-        payable(msg.sender).transfer(numTokens * PRICE_PER_TOKEN);
+        unchecked {
+            require(balanceOf[msg.sender] >= numTokens);
+            balanceOf[msg.sender] -= numTokens;
+            payable(msg.sender).transfer(numTokens * PRICE_PER_TOKEN);
+        }
+        
     }
 }

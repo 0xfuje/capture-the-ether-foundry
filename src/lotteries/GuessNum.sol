@@ -19,4 +19,5 @@ contract GuessTheNumberChallenge {
             payable(msg.sender).transfer(2 ether);
         }
     }
+    receive() external payable {}
 }

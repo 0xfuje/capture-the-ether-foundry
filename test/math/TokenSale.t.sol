@@ -11,5 +11,11 @@ contract TokenSaleTest is Test {
 
     function setUp() public {
         tokenSale = new TokenSaleChallenge();
+        deal(h3x0r, 1 ether);
+        deal(address(tokenSale), 1 ether);
+    }
+
+    function testTokenSaleExploit() public {
+        vm.startPrank(h3x0r);
     }
 }

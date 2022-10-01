@@ -2,10 +2,10 @@
 pragma solidity 0.8.13;
 
 contract AssumeOwnershipChallenge {
-    address owner;
+    address public owner;
     bool public isComplete;
 
-    function AssumeOwmershipChallenge() public {
+    function assumeOwnership() public {
         owner = msg.sender;
     }
 

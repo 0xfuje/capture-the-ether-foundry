@@ -11,5 +11,26 @@ contract GuessSecretNumTest is Test {
 
     function setUp() public {
         guessSecretNum = new GuessTheSecretNumberChallenge();
+        deal(h3x0r, 1 ether);
+        deal(address(guessSecretNum), 1 ether);
+    }
+
+    function testSecretNumExploit() public {
+        vm.startPrank(h3x0r);
+
+        // there may be better ways to solve this than brute force
+        // ¯\_(ツ)_/¯
+
+        uint8 secretNum;
+        for (uint8 i; i < 256; i++) {
+            bytes32 hash = keccak256(abi.encodePacked(i));
+            if (hash == guessSecretNum.answerHash()) {
+                emit log_named_uint("secret num found", uint(i));
+                secretNum = i;
+                break;
+            }
+        }
+        guessSecretNum.guess{value: 1 ether}(secretNum);
+        assertEq(h3x0r.balance, 2 ether);
     }
 }
